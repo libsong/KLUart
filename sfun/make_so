@@ -1,0 +1,12 @@
+#!/bin/sh
+
+SOVERSION=libKL_Uart_1_0.so
+
+gcc -fPIC -c kl_serial_ctl_sfun_wrapper.c -o kl_serial_ctl_sfun_wrapper.o
+gcc -fPIC -c kl_serial_recv_sfun_wrapper.c -o kl_serial_recv_sfun_wrapper.o
+gcc -fPIC -c kl_serial_send_sfun_wrapper.c -o kl_serial_send_sfun_wrapper.o
+
+ld -o $SOVERSION kl_serial_ctl_sfun_wrapper.o kl_serial_recv_sfun_wrapper.o kl_serial_send_sfun_wrapper.o -shared
+\cp $SOVERSION /usr/lib/
+
+rm *.o
