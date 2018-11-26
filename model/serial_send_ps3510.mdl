@@ -16,9 +16,9 @@ Library {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "KLJS168"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Fri Jul 06 10:42:28 2018"
-  RTWModifiedTimeStamp	  452774541
-  ModelVersionFormat	  "1.%<AutoIncrement:15>"
+  LastModifiedDate	  "Fri Nov 23 16:33:47 2018"
+  RTWModifiedTimeStamp	  464891621
+  ModelVersionFormat	  "1.%<AutoIncrement:16>"
   ConfigurationManager	  "None"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -709,7 +709,7 @@ Library {
       Name		      "send"
       SID		      "1"
       Ports		      [2, 2]
-      Position		      [130, 60, 280, 120]
+      Position		      [60, 105, 210, 165]
       Permissions	      "NoReadOrWrite"
       MinAlgLoopOccurrences   off
       PropExecContextOutsideSubsystem off
@@ -723,8 +723,8 @@ Library {
       "会强制转化为字节类型后发送\n\nen\n给值 1，模块才会使能发送功能\n\nLenWrote\n成功发送的数据字节数\n\nErr\n模块错误"
       "标识，非 0 则有错误存在，具体含义见 《KL_Uart simulink模块应用指导.pdf》"
       MaskPromptString	      "Device type|PXIm|PXIn|Channel|2"
-      MaskStyleString	      "popup(TU-5011|MOXA|TTYS),edit,edit,popup(1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|"
-      "20|21|22|23|24|25|26|27|28|29|30|31|32),edit"
+      MaskStyleString	      "popup(TU-5011|MOXA_PCI|TTYS|MOXA_PCIe),edit,edit,popup(1|2|3|4|5|6|7|8|9|10|11|12|13|14|1"
+      "5|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32),edit"
       MaskVariables	      "ctlid=@1;resv1=@2;resv2=@3;resv0=@4;resv3=@5;"
       MaskTunableValueString  "on,on,on,on,on"
       MaskCallbackString      "bco = get_param(gcb,'ctlid');\n\nif(strcmp(bco,'TU-5011')),\n    set_param(gcb,'MaskVis"

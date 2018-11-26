@@ -34,6 +34,7 @@
 #endif
 
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//因为一开始做模块时未考虑到位
 //本文件被用来发送模块了，与文件名称不一致
 
 /* %%%-SFUNWIZ_wrapper_includes_Changes_BEGIN --- EDIT HERE TO _END */
@@ -41,6 +42,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "TU5011.h"
+#include "we_types.h"
 
 static char  g_szMsg[1024];
 static void ErrorPrint(char *str)
@@ -62,6 +64,8 @@ static void ErrorPrint(char *str)
 #define LENGTH 1024
 extern PS_DevHandle g_ps3510_handle[PS3510SERIAL_MAXDEV][PS3510SERIAL_MAXDEV];
 extern int g_DevInited[PS3510SERIAL_MAXDEV][PS3510SERIAL_MAXDEV];
+
+extern Opal_Serial_Async_Ctrl_Icon g_icon[MOXA_MAXCTLCHL];
 
 void kl_serial_ctl_sfun_Start_wrapper(const real_T *u0,
                           const real_T *u1,
@@ -129,6 +133,18 @@ void kl_serial_ctl_sfun_Outputs_wrapper(const real_T *u0,
 																			// lengthWritten,rc,Tx_data_cnt);
 				// ErrorPrint(g_szMsg);
 			// }
+		}
+		if (devType == 2 || devType == 3 || devType == 4) {
+			for(i=0; i<u_width; i++)
+			{
+				pBuffer[i] = (unsigned char)u0[i];
+			}
+			rc = WriteSerial(&g_icon[SendChannel],pBuffer,u_width);
+			for(i=0; i<u_width; i++)
+			{
+				y0[i] = rc;
+			}
+			*y1 = rc;
 		}
 	}
 }

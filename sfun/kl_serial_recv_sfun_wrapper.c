@@ -38,6 +38,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "TU5011.h"
+#include "we_types.h"
 
 static char  g_szMsg[1024];
 static void ErrorPrint(char *str)
@@ -50,14 +51,16 @@ static void ErrorPrint(char *str)
 	
 	if( fp != 0)
 	{
-		fprintf(fp, "%s\n",str);
+		fprintf(fp, "%s",str);
 		fflush(fp);
 	}
 }
 
 #define PS3510SERIAL_MAXDEV 256
 #define LENGTH 1024
+
 extern PS_DevHandle g_ps3510_handle[PS3510SERIAL_MAXDEV][PS3510SERIAL_MAXDEV];
+extern Opal_Serial_Async_Ctrl_Icon g_icon[MOXA_MAXCTLCHL];
 
 void kl_serial_recv_sfun_Start_wrapper(const real_T *u0,
                           const real_T *u1,
@@ -120,12 +123,31 @@ void kl_serial_recv_sfun_Outputs_wrapper(const real_T *u0,
 				// ErrorPrint(g_szMsg);
 			
 				// Rd_data_cnt += lengthRead;
+				// sprintf(g_szMsg,"cnt : %d -- ",cnt++);
+				// ErrorPrint(g_szMsg);
 				for(i=0; i<RVCount; i++)
 				{
 					// printf("%d\t", ReadpBuffer[i]);
+					// sprintf(g_szMsg,"%d ",ReadpBuffer[i]);
+					// ErrorPrint(g_szMsg);
 					y0[i] = ReadpBuffer[i];
 				}
+				// sprintf(g_szMsg,"\n");
+				// ErrorPrint(g_szMsg);
 				*y1 = result;
+			}
+		}
+		
+		if (devType == 2 || devType == 3 || devType == 4) {
+			lengthRead = ReadSerialWithTimeout(&g_icon[ReceiveChannel],ReadpBuffer,RVCount,0,50);
+			if(lengthRead > 0) {
+				for(i=0; i<lengthRead; i++)
+				{
+					//printf("%d\t", ReadpBuffer[i]);
+					
+					y0[i] = ReadpBuffer[i];
+				}
+				*y1 = lengthRead;
 			}
 		}
 	}

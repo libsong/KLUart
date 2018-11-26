@@ -16,9 +16,9 @@ Library {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "KLJS168"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Fri Jul 06 11:42:59 2018"
-  RTWModifiedTimeStamp	  452778178
-  ModelVersionFormat	  "1.%<AutoIncrement:50>"
+  LastModifiedDate	  "Fri Nov 23 11:03:28 2018"
+  RTWModifiedTimeStamp	  464871743
+  ModelVersionFormat	  "1.%<AutoIncrement:52>"
   ConfigurationManager	  "None"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -691,7 +691,7 @@ Library {
       Name		      "ctl"
       SID		      "1"
       Ports		      [0, 1]
-      Position		      [125, 103, 250, 167]
+      Position		      [205, 123, 330, 187]
       Permissions	      "NoReadOrWrite"
       MinAlgLoopOccurrences   off
       PropExecContextOutsideSubsystem off
@@ -705,19 +705,19 @@ Library {
       "卡\n    TTYS:计算机自带串口，只支持RS232\n\nPXIm、PXIn\n此两个参数用于表示使用的是哪一个TU-5011板卡\n当 Device T"
       "ype 选择 TU-5011 时出现，可通过命令行 lspci | grep 8038\n获取，比如返回 \n18:0d.0 Bridge: Unknown device 8038:0d"
       "b6 (rev ba)\n则 PXIm 填写 18 的十进制数 24，PXIn 填写 0d 的十进制数 13，\n如果多块板卡在同一机器中，则一块块依次"
-      "安装查询\n\nChannel\n使用的通道号\n当 Device Type 选择 TU-5011 时范围是 1~8，\n当 Device Type 选择 MOXA 时范围是"
-      " 1~32，\n当 Device Type 选择 TTYS 时范围视计算机自带串口个数而定\n\nSend or Recv\n当 Device Type 选择 TU-5011 时"
-      "出现，用于标识 Channel 是发送还是接受通道\n\nData Size\n数据位大小\nParity \n校验位\nBaudRate\n波特率，当选择 cu"
-      "stom 时出现 Custom baud，可填入自定义波特率值\nStop Bit\n停止位\n\nMode\n串口模式，RS232/RS422/RS485，对于计算机"
-      "自带串口 TTYS 则只支持 RS232模式\n\nErr\n模块错误标识，非 0 则有错误存在，具体含义见 《KL_Uart simulink模块应用指"
-      "导.pdf》"
+      "安装查询\n\nChannel\n使用的通道号\n当 Device Type 选择 TU-5011 时范围是 1~8，\n当 Device Type 选择 MOXA_PCI 或 M"
+      "OXA_PCIe 时范围是 1~32，\n当 Device Type 选择 TTYS 时范围视计算机自带串口个数而定\n\nSend or Recv\n当 Device Typ"
+      "e 选择 TU-5011 时出现，用于标识 Channel 是发送还是接受通道\n\nData Size\n数据位大小\nParity \n校验位\nBaudRate\n"
+      "波特率，当选择 custom 时出现 Custom baud，可填入自定义波特率值\nStop Bit\n停止位\n\nMode\n串口模式，RS232/RS422/"
+      "RS485，对于计算机自带串口 TTYS 则只支持 RS232模式\n\nErr\n模块错误标识，非 0 则有错误存在，具体含义见 《KL_Uart "
+      "simulink模块应用指导.pdf》"
       MaskPromptString	      "Device Type|Control ID|PXIm|PXIn|Channel|Send or Recv|Data Size|Parity|Baud Rate|Custom "
       "baud|Stop Bit|ParityEnable|Mode"
-      MaskStyleString	      "popup(TU-5011|MOXA|TTYS),popup(1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|2"
-      "3|24|25|26|27|28|29|30|31|32),edit,edit,popup(1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|"
-      "26|27|28|29|30|31|32),popup(Send|Receive),popup(Data8|Data5|Data6|Data7),popup(Odd|Even|None),popup(50|75|110|13"
-      "4|150|200|300|600|1200|1800|2400|4800|9600|38400|57600|76800|115200|custom),edit,popup(1|2),popup(DIS|EN),popup("
-      "RS422|RS485|RS232)"
+      MaskStyleString	      "popup(TU-5011|MOXA_PCI|TTYS|MOXA_PCIe),popup(1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18"
+      "|19|20|21|22|23|24|25|26|27|28|29|30|31|32),edit,edit,popup(1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|2"
+      "1|22|23|24|25|26|27|28|29|30|31|32),popup(Send|Receive),popup(Data8|Data5|Data6|Data7),popup(Odd|Even|None),popu"
+      "p(50|75|110|134|150|200|300|600|1200|1800|2400|4800|9600|38400|57600|76800|115200|custom),edit,popup(1|2),popup("
+      "DIS|EN),popup(RS422|RS485|RS232)"
       MaskVariables	      "choosewrongdata=@1;ctlid=@2;resv0=@3;resv1=@4;sendchl=@5;resv2=@6;lenbit=@7;paritybit=@8;ba"
       "ud=@9;resv3=@10;stopbit=@11;parityenbale=@12;mode=@13;"
       MaskTunableValueString  "on,on,on,on,on,on,on,on,on,on,on,on,on"

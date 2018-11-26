@@ -34,6 +34,7 @@
 #endif
 
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//因为一开始做模块时未考虑到位
 //本文件被用来控制模块了，与文件名称不一致
 
 /* %%%-SFUNWIZ_wrapper_includes_Changes_BEGIN --- EDIT HERE TO _END */
@@ -41,6 +42,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "TU5011.h"
+#include "we_types.h"
 
 static char  g_szMsg[128];
 static void ErrorPrint(char *str)
@@ -61,6 +63,9 @@ static void ErrorPrint(char *str)
 #define PS3510SERIAL_MAXDEV 256
 PS_DevHandle g_ps3510_handle[PS3510SERIAL_MAXDEV][PS3510SERIAL_MAXDEV] = {0};
 int g_ps3510_DevInited[PS3510SERIAL_MAXDEV][PS3510SERIAL_MAXDEV] = {0};
+
+extern int   fd_ser[MOXA_MAXCTLCHL];
+Opal_Serial_Async_Ctrl_Icon g_icon[MOXA_MAXCTLCHL] = {0};
 
 void kl_serial_send_sfun_Start_wrapper(const real_T *u0,
                           const real_T *u1,
@@ -98,7 +103,37 @@ void kl_serial_send_sfun_Start_wrapper(const real_T *u0,
 	int devtype = (int)*choosewrongdata;
 	int _baud = (int)*baud;
 	int actual_baud = 9600;
+	
+	sprintf(g_szMsg," chl:%d,_baud:%d ,size:%d,pri:%d,stop:%d\n",Channel,_baud,(int)*lenbit,pri,stop);
+	ErrorPrint(g_szMsg);
 
+	if (devtype == 2 || devtype == 3 || devtype == 4) {
+		if (fd_ser[Channel] == 0) {
+			g_icon[Channel].portnum = Channel;
+			g_icon[Channel].baud = _baud;
+			g_icon[Channel].size = (int)*lenbit - 1;
+			if (pri == 1)
+				g_icon[Channel].parity = WE_PARITY_Odd;
+			if (pri == 2)
+				g_icon[Channel].parity = WE_PARITY_Even;
+			if (pri == 3)
+				g_icon[Channel].parity = WE_PARITY_None;
+			g_icon[Channel].stop = stop - 1;
+			g_icon[Channel].flow = WE_FLOWCTL_None;
+			g_icon[Channel].ctlid = Channel;
+			
+			if (InitSerial (&g_icon[Channel],devtype) != EOK) {
+				sprintf(g_szMsg," devtype : %d , InitSerial failed.\n",devtype);
+				ErrorPrint(g_szMsg);
+				
+				return ;
+			} 
+			else {
+				sprintf(g_szMsg," devtype : %d , InitSerial suc , channel ser fd : %d.\n",devtype,fd_ser[Channel]);
+				ErrorPrint(g_szMsg);
+			}
+		}
+	}
 	
 	if (devtype == 1) {//TU-5011
 		if (g_ps3510_DevInited[pxim][pxin] == 0) {
@@ -284,19 +319,26 @@ void kl_serial_send_sfun_Terminate_wrapper(const real_T *u0,
                           const real_T  *resv3,  const int_T p_width12,
 			     const int_T y_width, const int_T u_width)
 {
-	int id = (int)*ctlid;
 	int result = PS_SUCCESS;
 	int pxim = (int)*resv0;
 	int pxin = (int)*resv1;
+	int Channel = (int)*sendchl - 1;
+	int devtype = (int)*choosewrongdata;
 	
-	if (g_ps3510_DevInited[pxim][pxin] == 1) {
-		g_ps3510_DevInited[pxim][pxin] = 0;
-		result = TU5011_CloseDevice(g_ps3510_handle[pxim][pxin]);
-		if(result != 0)
-		{
-			// printf("Close device is error，The error code is %d.\n", result);
-			return ;
-		}	
+	if (devtype == 2 || devtype == 3 || devtype == 4) {
+		CloseSerial(&g_icon[Channel]);
+	}
+	
+	if (devtype == 1) {
+		if (g_ps3510_DevInited[pxim][pxin] == 1) {
+			g_ps3510_DevInited[pxim][pxin] = 0;
+			result = TU5011_CloseDevice(g_ps3510_handle[pxim][pxin]);
+			if(result != 0)
+			{
+				// printf("Close device is error，The error code is %d.\n", result);
+				return ;
+			}	
+		}
 	}
 }
 

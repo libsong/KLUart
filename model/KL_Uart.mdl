@@ -16,9 +16,9 @@ Library {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "KLJS168"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Fri Jul 06 11:43:37 2018"
-  RTWModifiedTimeStamp	  452778214
-  ModelVersionFormat	  "1.%<AutoIncrement:22>"
+  LastModifiedDate	  "Fri Nov 23 16:35:03 2018"
+  RTWModifiedTimeStamp	  464891700
+  ModelVersionFormat	  "1.%<AutoIncrement:25>"
   ConfigurationManager	  "None"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -638,14 +638,14 @@ Library {
     ShowPageBoundaries	    off
     ZoomFactor		    "100"
     ReportName		    "simulink-default.rpt"
-    SIDHighWatermark	    "28"
+    SIDHighWatermark	    "31"
     Block {
       BlockType		      Reference
       Name		      "ctl"
-      SID		      "28"
+      SID		      "29"
       Ports		      [0, 1]
-      Position		      [50, 51, 200, 119]
-      LibraryVersion	      "1.50"
+      Position		      [50, 36, 195, 104]
+      LibraryVersion	      "1.52"
       SourceBlock	      "serial_control_ps3510/ctl"
       SourceType	      "串口控制模块"
       choosewrongdata	      "TU-5011"
@@ -665,10 +665,10 @@ Library {
     Block {
       BlockType		      Reference
       Name		      "recvive"
-      SID		      "24"
+      SID		      "31"
       Ports		      [2, 2]
-      Position		      [50, 137, 200, 208]
-      LibraryVersion	      "1.17"
+      Position		      [40, 141, 215, 214]
+      LibraryVersion	      "1.18"
       SourceBlock	      "serial_ps3510_recv/recvive"
       SourceType	      "串口接收模块"
       ctlid		      "TU-5011"
@@ -681,10 +681,10 @@ Library {
     Block {
       BlockType		      Reference
       Name		      "send"
-      SID		      "25"
+      SID		      "30"
       Ports		      [2, 2]
-      Position		      [50, 255, 200, 315]
-      LibraryVersion	      "1.15"
+      Position		      [50, 235, 200, 295]
+      LibraryVersion	      "1.16"
       SourceBlock	      "serial_send_ps3510/send"
       SourceType	      "串口发送模块"
       ctlid		      "TU-5011"
